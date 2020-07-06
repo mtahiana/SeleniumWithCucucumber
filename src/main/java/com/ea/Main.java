@@ -24,7 +24,7 @@ import static org.openqa.selenium.devtools.network.Network.emulateNetworkConditi
 import static org.openqa.selenium.devtools.network.Network.loadingFailed;
 import static org.openqa.selenium.devtools.target.Target.attachToTarget;
 import static org.openqa.selenium.support.locators.RelativeLocator.withTagName;
-import static org.openqa.selenium.devtools.DevTools;
+
 
 public class Main {
 
