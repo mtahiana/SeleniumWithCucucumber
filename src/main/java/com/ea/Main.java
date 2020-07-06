@@ -24,6 +24,7 @@ import static org.openqa.selenium.devtools.network.Network.emulateNetworkConditi
 import static org.openqa.selenium.devtools.network.Network.loadingFailed;
 import static org.openqa.selenium.devtools.target.Target.attachToTarget;
 import static org.openqa.selenium.support.locators.RelativeLocator.withTagName;
+import static org.openqa.selenium.devtools.DevTools;
 
 public class Main {
 
@@ -31,9 +32,12 @@ public class Main {
 
         //Selenium 4
         System.setProperty("webdriver.chrome.driver", "/Users/Tahiana/ChromeDriver/chromedriver");
-        var chromeDriver = new ChromeDriver();
+        //var chromeDriver = new ChromeDriver();
+        ChromeDriver chromeDriver = new ChromeDriver();
 
-        var chromeDevTools = chromeDriver.getDevTools();
+        //var chromeDevTools = chromeDriver.getDevTools();
+        DevTools chromeDevTools = chromeDriver.getDevTools();
+        
         //Session of ChromeDevTool
         chromeDevTools.createSession();
 
