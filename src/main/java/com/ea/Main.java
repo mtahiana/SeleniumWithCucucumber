@@ -3,6 +3,8 @@ package com.ea;
 import com.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.Console;
@@ -14,9 +16,12 @@ import org.openqa.selenium.devtools.network.model.ConnectionType;
 import org.openqa.selenium.devtools.network.model.ResourceType;
 import org.openqa.selenium.devtools.target.Target;
 import org.openqa.selenium.devtools.target.model.TargetInfo;
+import org.openqa.selenium.remote.SessionId;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.devtools.inspector.Inspector.detached;
@@ -125,7 +130,7 @@ public class Main {
         targetInfos.forEach(
                 targetInfo -> {
                     //var sessionId = devTools.send(attachToTarget(targetInfo.getTargetId(), Optional.of(false)));
-                    Set<TargetInfo> sessionId = devTools.send(attachToTarget(targetInfo.getTargetId(), Optional.of(false)));
+                    SessionId sessionId = devTools.send(attachToTarget(targetInfo.getTargetId(), Optional.of(false)));
                     devTools.send(
                             Target.sendMessageToTarget(
                                     "{\"method\":\"Page.crash\"}",
@@ -158,7 +163,8 @@ public class Main {
     private static void Selenium4MiscFetures(ChromeDriver chromeDriver){
 
         // New Tab
-        var newTab = chromeDriver.switchTo().newWindow(WindowType.TAB);
+        //var newTab = chromeDriver.switchTo().newWindow(WindowType.TAB);
+        WebDriver newTab = chromeDriver.switchTo().newWindow(WindowType.TAB);
         newTab.get("http://executeautomation.com/demosite/Login.html");
 
         //login
@@ -166,23 +172,27 @@ public class Main {
         newTab.findElement(By.name("Password")).sendKeys("admin");
         newTab.findElement(By.name("Login")).submit();
 
-        var checkbox = chromeDriver.findElement(withTagName("input").below(By.name("Male")).toLeftOf(By.name("Hindi")));
+        //var checkbox = chromeDriver.findElement(withTagName("input").below(By.name("Male")).toLeftOf(By.name("Hindi")));
+        WebElement checkbox = chromeDriver.findElement(withTagName("input").below(By.name("Male")).toLeftOf(By.name("Hindi")));
         checkbox.click();
         System.out.println(checkbox.getAttribute("name"));
 
 
-        var txtIntial = chromeDriver.findElement(withTagName("input")
+        //var txtIntial = chromeDriver.findElement(withTagName("input")
+        WebElement txtIntial = chromeDriver.findElement(withTagName("input")
                 .below(By.id("TitleId"))
                 .above(By.id("FirstName")));
 
         txtIntial.sendKeys("KK");
 
         //list of elements
-        var lstElements = chromeDriver.findElements(withTagName("input")
+        //var lstElements = chromeDriver.findElements(withTagName("input")
+        List<WebElement> lstElements = chromeDriver.findElements(withTagName("input")
                 .below(By.xpath("//h2[text()=' User Form ']"))
                 .above(By.name("Save")));
 
-        var elements = lstElements
+        //var elements = lstElements
+        Stream<Object> elements = lstElements
                 .stream()
                 .map(x -> x.getAttribute("input"));
 
